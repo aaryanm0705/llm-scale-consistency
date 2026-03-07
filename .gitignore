@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# SLURM logs
+*.out
+*.err
+
+# Source PDFs (redistribution restricted)
+*.pdf
+
+# Large CoT results files (exceed GitHub 100MB limit)
+results/consistency_results_cot_zeroshot.csv
+results/consistency_results_cot_oneshot.csv
+results/consistency_results_cot_chainwise.csv

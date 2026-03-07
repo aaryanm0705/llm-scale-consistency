@@ -1,0 +1,39 @@
+question_id,source,question,drop_type,drop_reason
+V149,WVS-4 (1999-2002),How confident are you in the press?,manual,manual_review
+V152,WVS-4 (1999-2002),How confident are you in the police?,manual,manual_review
+V161,WVS-4 (1999-2002),How confident are you in NATO?,manual,manual_review
+V162,WVS-4 (1999-2002),How confident are you in the United Nations?,manual,manual_review
+V167,WVS-4 (1999-2002),Is having a democratic political system as a way of governing a country good?,manual,manual_review
+V191,WVS-4 (1999-2002),Do you believe in God?,manual,manual_review
+V192,WVS-4 (1999-2002),Do you believe in life after death?,manual,manual_review
+V193,WVS-4 (1999-2002),Do you believe in people have a soul?,manual,manual_review
+V194,WVS-4 (1999-2002),Do you believe in hell?,manual,manual_review
+V195,WVS-4 (1999-2002),Do you believe in heaven?,manual,manual_review
+V204,WVS-4 (1999-2002),Can claiming government benefits to which you are not entitled be justified?,manual,manual_review
+V205,WVS-4 (1999-2002),Can avoiding a fare on public transport be justified?,manual,manual_review
+V206,WVS-4 (1999-2002),Can cheating on taxes if you have a chance be justified?,manual,manual_review
+V207,WVS-4 (1999-2002),Can someone accepting a bribe in the course of their duties be justified?,manual,manual_review
+V208,WVS-4 (1999-2002),Can homosexuality be justified?,manual,manual_review
+V209,WVS-4 (1999-2002),Can prostitution be justified?,manual,manual_review
+V210,WVS-4 (1999-2002),Can abortion be justified?,manual,manual_review
+V211,WVS-4 (1999-2002),Can divorce be justified?,manual,manual_review
+V212,WVS-4 (1999-2002),Can euthanasia -- ending the life of the incurably sick be justified?,manual,manual_review
+V213,WVS-4 (1999-2002),Can suicide be justified?,manual,manual_review
+V83,WVS-4 (1999-2002),Which point on this scale most clearly describes how much weight you place on work (including housew,manual,manual_review
+V105,WVS-4 (1999-2002),People have different ideas about following instructions at work. Should one follow instructions eve,manual,manual_review
+V109,WVS-4 (1999-2002),"If someone says a child needs a home with both a father and a mother to grow up happily, would you t",manual,manual_review
+V172,WVS-4 (1999-2002),Democracy may have problems but it's better than any other form of government,manual,manual_review
+V127,WVS-4 (1999-2002),Would less emphasis on money and material possessions be a good thing or bad thing?,manual,manual_review
+V128,WVS-4 (1999-2002),Would less importance placed on work in our lives be a good thing or bad thing?,manual,manual_review
+V129,WVS-4 (1999-2002),Would more emphasis on the development of technology be a good thing or bad thing?,manual,manual_review
+V130,WVS-4 (1999-2002),Would greater respect for authority be a good thing or bad thing?,manual,manual_review
+V131,WVS-4 (1999-2002),Would more emphasis on family life be a good thing or bad thing?,manual,manual_review
+V227,WVS-5 (2005-2006),How serious a problem for the world is people living in poverty and need?,manual,manual_review
+V228,WVS-5 (2005-2006),How serious a problem for the world is discrimination against girls and women?,manual,manual_review
+V229,WVS-5 (2005-2006),How serious a problem for the world is poor sanitation and infectious diseases?,manual,manual_review
+V230,WVS-5 (2005-2006),How serious a problem for the world is inadequate education?,manual,manual_review
+V231,WVS-5 (2005-2006),How serious a problem for the world is environmental pollution?,manual,manual_review
+v37,EVS-v37,How much do you trust people of another nationality?,manual,manual_review
+v60,EVS-v60,Do you believe in heaven?,manual,manual_review
+v126,EVS-v126,How confident are you in the health care system?,manual,manual_review
+v127,EVS-v127,How confident are you in the justice system?,manual,manual_review
