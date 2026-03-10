@@ -59,7 +59,7 @@ answer-scale variants (7,470 evaluation items total), drawn from:
 | World Values Survey (WVS) | Waves 4–7 (1999–2022) | 171 |
 | European Values Study (EVS) | 2017 | 69 |
 | Understanding Society | Wave 1 (2009–2010) | 19 |
-| OpinionQA (Santurkar et al., 2023) | 15 Pew survey waves | 1,235 |
+| OpinionQA | 15 Pew survey waves | 1,235 |
 | **Total** | | **1,494** |
 
 **Source PDFs** (WVS, EVS, Understanding Society) are not included due
@@ -94,9 +94,11 @@ This executes three scripts in order:
 3. `finalize_dataset.py` — generates five scale variants per question and
    combines with OpinionQA
 
-The source PDFs must be placed in `raw_pdfs/` before running. The OpinionQA
-source file (`opinionQA_questions_final.csv`) must be placed in
-`extracted_content/` before running Script 3.
+The WVS, EVS, and Understanding Society source PDFs are not included due to
+redistribution restrictions and must be obtained independently from their
+respective data archives. The OpinionQA-derived source file is provided by
+the complementary thesis dataset (Kandlinger, 2026); see the Collaborative
+Component section below.
 
 ---
 
