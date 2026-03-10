@@ -8,7 +8,8 @@ the OpinionQA benchmark, and writes the final dataset.
 
 Input:  extracted_content/wvs_evs_us_combined.csv
         extracted_content/opinionQA_questions_final.csv
-Output: extracted_content/combined_dataset_new.csv
+Output: extracted_content/combined_dataset.csv
+        extracted_content/combined_original_source_questions.csv
 
 Each question produces 5 rows (answer_var_id 1-5):
   Variants 1-4: 4-option scales (scale_type: 4-bipolar or 4-unipolar)
@@ -31,7 +32,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 INPUT_PATH = BASE_DIR / "extracted_content" / "wvs_evs_us_combined.csv"
-OUTPUT_PATH = BASE_DIR / "extracted_content" / "combined_dataset_new.csv"
+OUTPUT_PATH        = BASE_DIR / "extracted_content" / "combined_dataset.csv"
+OUTPUT_PATH_SOURCE = BASE_DIR / "extracted_content" / "combined_original_source_questions.csv"
 
 
 # ===========================================================================
@@ -177,7 +179,7 @@ SCALE_VARIANTS = {
         2: ["A lot better", "A little better", "A little worse", "A lot worse"],
         3: ["Considerably better", "Marginally better", "Marginally worse", "Considerably worse"],
         4: ["Significantly better", "Slightly better", "Slightly worse", "Significantly worse"],
-        5: ["A lot Better", "A little Better", "No difference", "A little Worse", "A lot Worse"],
+        5: ["A lot better", "A little better", "No difference", "A little worse", "A lot worse"],
     },
     "PositiveNegative": {
         1: ["Very favorable", "Somewhat favorable", "Somewhat unfavorable", "Very unfavorable"],
@@ -398,6 +400,42 @@ def main():
         print(f"  {qtype}: {count}")
 
     print(f"\nOutput written to: {OUTPUT_PATH}")
+
+    # --- Write combined_original_source_questions.csv (1 row per unique question_id) ---
+    seen_ids = set()
+    source_rows = []
+    for row in all_rows:
+        qid = row["question_id"]
+        if qid in seen_ids:
+            continue
+        seen_ids.add(qid)
+        options = row["original_answering_options"]
+        try:
+            parsed_options = ast.literal_eval(options)
+            num_options = len(parsed_options)
+        except (ValueError, SyntaxError):
+            num_options = len([o for o in options.split("|") if o.strip()])
+        source_rows.append({
+            "source":          row["source"],
+            "question_id":     qid,
+            "subject":         row["subject"],
+            "question":        row["question"],
+            "question_type":   row["question_type"],
+            "answer_options":  options,
+            "num_options":     num_options,
+            "question_length": len(row["question"]),
+        })
+
+    SOURCE_FIELDNAMES = [
+        "source", "question_id", "subject", "question",
+        "question_type", "answer_options", "num_options", "question_length",
+    ]
+    with open(OUTPUT_PATH_SOURCE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=SOURCE_FIELDNAMES)
+        writer.writeheader()
+        writer.writerows(source_rows)
+
+    print(f"Source questions written to: {OUTPUT_PATH_SOURCE} ({len(source_rows)} rows)")
 
 
 if __name__ == "__main__":

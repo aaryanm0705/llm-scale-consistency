@@ -55,9 +55,8 @@ def _parse_args():
     return parser.parse_args()
 
 
-_args = _parse_args()
-INPUT_PATH  = _args.input
-OUTPUT_PATH = _args.output
+INPUT_PATH  = BASE_DIR / "extracted_content" / "wvs_evs_curated_tidied.csv"
+OUTPUT_PATH = BASE_DIR / "extracted_content" / "wvs_evs_us_combined.csv"
 
 # Output schema matches wvs_evs_curated_tidied.csv
 FIELDNAMES = [
@@ -275,6 +274,11 @@ US_QUESTIONS = GROUP_A + GROUP_B + GROUP_C
 
 
 def main():
+    global INPUT_PATH, OUTPUT_PATH
+    args = _parse_args()
+    INPUT_PATH  = args.input
+    OUTPUT_PATH = args.output
+
     if not INPUT_PATH.exists():
         print(f"ERROR: Input not found: {INPUT_PATH}", file=sys.stderr)
         sys.exit(1)
