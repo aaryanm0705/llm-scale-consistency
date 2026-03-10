@@ -29,7 +29,7 @@ module load python/3.10
 source activate llm
 
 echo "Starting expert one-shot evaluation..."
-cd /dss/dsshome1/0C/ra96duk2/thesis_llm_evaluation
+cd "$(dirname "$0")/../.."
 python scripts/evaluate_consistency_expert_oneshot.py
 
 echo
