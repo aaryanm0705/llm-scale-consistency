@@ -112,8 +112,11 @@ python evaluate_consistency_vanilla_zeroshot.py
 ```
 
 Evaluation was conducted on the LRZ AI cluster (NVIDIA H100 GPUs).
-SLURM job scripts are provided in `scripts/slurm/` for reference; paths
-and partition parameters are specific to the LRZ environment.
+SLURM job scripts are provided in `scripts/slurm/` for reference. The
+`--partition`, `--account`, and `module load` directives are specific to
+the LRZ AI cluster and will need to be adapted for other HPC environments.
+The working directory in each script is resolved relative to the repo root
+and does not require modification.
 
 ---
 

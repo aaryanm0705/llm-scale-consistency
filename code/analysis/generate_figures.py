@@ -389,53 +389,60 @@ def main():
     
     print("Generating Figure 6.1 (APD heatmap)...")
     
-    HEATMAP_CONFIGS = {
-        "Vanilla\nzero-shot":       "vanilla-zeroshot",
-        "Vanilla\none-shot":        "vanilla-oneshot",
-        "Vanilla\nchainwise":       "vanilla-chainwise",
-        "Expert\nzero-shot":        "expert-zeroshot",
-        "Expert\none-shot":         "expert-oneshot",
-        "Expert\nchainwise":        "expert-chainwise",
-        "Inconsistent\nzero-shot":  "inconsistent-zeroshot",
-        "Inconsistent\none-shot":   "inconsistent-oneshot",
-        "Inconsistent\nchainwise":  "inconsistent-chainwise",
-        "Scale-\nAnchored":         "scale-anchored",
-    }
-    
-    config_labels = list(HEATMAP_CONFIGS.keys())
-    model_labels  = [MODEL_DISPLAY[m] for m in MODEL_ORDER]
-    
-    data61 = np.full((len(config_labels), len(MODEL_ORDER)), np.nan)
-    for i, (cfg_label, cfg_key) in enumerate(HEATMAP_CONFIGS.items()):
-        if cfg_key in mean_apd_by_cfg:
-            for j, model in enumerate(MODEL_ORDER):
-                short = MODEL_DISPLAY[model]
-                data61[i, j] = mean_apd_by_cfg[cfg_key].get(short, np.nan)
-    
-    fig61, ax61 = plt.subplots(figsize=(W_TEXT, 4.5))
-    im = ax61.imshow(data61, cmap=plt.cm.YlOrRd, vmin=0.0, vmax=0.80, aspect="auto")
-    
-    for i in range(len(config_labels)):
-        for j in range(len(model_labels)):
-            val = data61[i, j]
-            if not np.isnan(val):
-                color = "white" if (val / 0.80) > 0.65 else "black"
-                ax61.text(j, i, f"{val:.2f}", ha="center", va="center", fontsize=7, color=color)
-    
-    ax61.set_xticks(range(len(model_labels)))
-    ax61.set_xticklabels(model_labels, fontsize=8)
-    ax61.set_yticks(range(len(config_labels)))
-    ax61.set_yticklabels(config_labels, fontsize=8, linespacing=0.9)
-    ax61.tick_params(axis="both", which="both", length=0)
-    
-    for y in [2.5, 5.5, 8.5]:
-        ax61.axhline(y, color="white", linewidth=1.8)
-    
-    cbar = fig61.colorbar(im, ax=ax61, fraction=0.03, pad=0.02)
-    cbar.set_label("Mean APD", fontsize=8)
-    cbar.ax.tick_params(labelsize=7)
-    cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8])
-    ax61.set_title("Mean APD by model and evaluation configuration", fontsize=9, pad=6)
+    APD_CONFIGS_61 = [
+        ("scale-anchored",         "Scale-Anchored"),
+        ("vanilla-zeroshot",       "Vanilla Zero-Shot"),
+        ("vanilla-oneshot",        "Vanilla One-Shot"),
+        ("vanilla-chainwise",      "Vanilla Chainwise"),
+        ("expert-zeroshot",        "Expert Zero-Shot"),
+        ("expert-oneshot",         "Expert One-Shot"),
+        ("expert-chainwise",       "Expert Chainwise"),
+        ("inconsistent-zeroshot",  "Inconsistent Zero-Shot"),
+        ("inconsistent-oneshot",   "Inconsistent One-Shot"),
+        ("inconsistent-chainwise", "Inconsistent Chainwise"),
+        ("cot-zeroshot",           "CoT Zero-Shot"),
+        ("cot-oneshot",            "CoT One-Shot"),
+        ("cot-chainwise",          "CoT Chainwise"),
+    ]
+
+    apd_rows = []
+    for cfg_key, cfg_label in APD_CONFIGS_61:
+        series = mean_apd_by_cfg.get(cfg_key, pd.Series(dtype=float))
+        row = {"Configuration": cfg_label}
+        for mdl in MODEL_ORDER_APD:
+            row[mdl] = series.get(mdl, np.nan)
+        apd_rows.append(row)
+
+    apd_df = (pd.DataFrame(apd_rows)
+            .set_index("Configuration")
+            .reindex([c for _, c in APD_CONFIGS_61]))
+
+    annot_apd = apd_df[MODEL_ORDER_APD].applymap(
+        lambda x: "" if pd.isna(x) else f"{x:.2f}"
+    )
+
+    cmap_apd = copy.copy(plt.cm.YlOrRd)
+    cmap_apd.set_bad(color="#D3D3D3")
+
+    fig61, ax61 = plt.subplots(figsize=(10, 8.5))
+    sns.heatmap(apd_df[MODEL_ORDER_APD], annot=annot_apd, fmt="",
+                cmap=cmap_apd, vmin=0.0, vmax=0.80,
+                linewidths=0.5, linecolor="white", annot_kws={"size": 9},
+                cbar_kws={"label": "Mean APD", "shrink": 0.8},
+                ax=ax61)
+
+    data_flat = apd_df[MODEL_ORDER_APD].values.flatten()
+    for idx, text in enumerate(ax61.texts):
+        val = data_flat[idx]
+        if not np.isnan(val) and (val / 0.80) > 0.65:
+            text.set_color("white")
+
+    ax61.set_xlabel("Model")
+    ax61.set_ylabel("Configuration")
+    ax61.set_xticklabels(MODEL_ORDER_APD, rotation=0)
+    ax61.set_yticklabels(ax61.get_yticklabels(), rotation=0)
+    ax61.hlines([1, 4, 7, 10], xmin=0, xmax=len(MODEL_ORDER_APD), colors="black", linewidths=2)
+
     
     fig61.tight_layout()
     out61 = FIGURES_DIR / "fig_6_1_apd_heatmap.png"
