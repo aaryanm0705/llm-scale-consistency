@@ -5,6 +5,7 @@ code for the master's thesis:
 
 > **A Framework for Consistent Multiple-Choice Question Answering with
 > Large Language Models across Varying Scales**
+>
 > Aaryan Mallayanmath, Ludwig-Maximilians-Universität München, 2026
 
 ---
