@@ -1,0 +1,10 @@
+matplotlib>=3.8.0
+numpy>=1.26.0
+pandas>=2.1.0
+pdfplumber>=0.11.0
+seaborn>=0.13.0
+
+# Evaluation scripts additionally require:
+# torch, transformers, accelerate
+# These are not included here as they depend on your CUDA environment.
+# Install via: pip install torch transformers accelerate
